@@ -7,7 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import models.Producto;
 import services.LoginService;
-import services.LoginServiceImpl;
+import services.LoginServiceCookieImpl;
+import services.LoginServiceSessionImpl;
 import services.ProductoServicesImp;
 
 import java.io.IOException;
@@ -20,8 +21,8 @@ public class ProductosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-        LoginService auth = new LoginServiceImpl();
-        Optional<String> cookieOptional = auth.getUsername(req);
+        LoginService auth = new LoginServiceSessionImpl();
+        Optional<String> sessionOptional = auth.getUsername(req);
 
         ProductoServicesImp service = new ProductoServicesImp();
         List<Producto> productos = service.listar();
@@ -40,7 +41,7 @@ public class ProductosServlet extends HttpServlet {
             out.println("               <td>Id</td>");
             out.println("               <td>Nombre</td>");
             out.println("               <td>Tipo</td>");
-            if(cookieOptional.isPresent()) {
+            if(sessionOptional.isPresent()) {
                 out.println("           <td>Precio</td>");
             }
             out.println("           </tr>");
@@ -49,7 +50,7 @@ public class ProductosServlet extends HttpServlet {
                 out.println("           <td> " + producto.getId() + " </td>");
                 out.println("           <td> " + producto.getNombre() + " </td>");
                 out.println("           <td> " + producto.getTipo() + " </td>");
-                if(cookieOptional.isPresent()) {
+                if(sessionOptional.isPresent()) {
                     out.println("       <td> " + producto.getPrecio() + " </td>");
                 }
                 out.println("       <tr>");
