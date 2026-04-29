@@ -43,7 +43,9 @@ public class ProductosServlet extends HttpServlet {
             out.println("               <td>Tipo</td>");
             if(sessionOptional.isPresent()) {
                 out.println("           <td>Precio</td>");
+                out.println("           <td>Compra producto</td>");
             }
+
             out.println("           </tr>");
             productos.forEach(producto -> {
                 out.println("       <tr>");
@@ -52,6 +54,7 @@ public class ProductosServlet extends HttpServlet {
                 out.println("           <td> " + producto.getTipo() + " </td>");
                 if(sessionOptional.isPresent()) {
                     out.println("       <td> " + producto.getPrecio() + " </td>");
+                    out.println("       <td><a href=\""+req.getContextPath()+"/agregar-carro?id="+producto.getId()+"\"</a>Agregar a carro</td>");
                 }
                 out.println("       <tr>");
             });

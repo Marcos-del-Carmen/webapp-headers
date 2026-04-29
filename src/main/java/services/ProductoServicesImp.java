@@ -26,4 +26,9 @@ public class ProductoServicesImp implements ProductService {
             return p.getNombre().contains(nombre);
         }).findFirst();
     }
+
+    @Override
+    public Optional<Producto> porId(Long id) {
+        return this.listar().stream().filter(p -> p.getId().equals(id)).findAny();
+    }
 }
