@@ -25,7 +25,7 @@ public class AgregarCarroServlet extends HttpServlet {
         Optional<Producto> producto = service.porId(id);
         if(producto.isPresent()) {
             ItemCarro item  = new ItemCarro(1, producto.get());
-            Carro carro ;
+            Carro carro;
             HttpSession session = req.getSession();
             if(session.getAttribute("carro") == null) {
                 carro = new Carro();
