@@ -15,7 +15,7 @@ import services.ProductoServicesImp;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebServlet("/agregar-carro")
+@WebServlet("/carro/agregar")
 public class AgregarCarroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -36,6 +36,6 @@ public class AgregarCarroServlet extends HttpServlet {
             }*/
             carro.addItemCarrito(item);
         }
-        resp.sendRedirect(req.getContextPath() + "/ver-carro");
+        resp.sendRedirect(req.getContextPath() + "/carro/ver");
     }
 }

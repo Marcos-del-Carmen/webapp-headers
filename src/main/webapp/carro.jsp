@@ -15,7 +15,7 @@
        <%if (carro==null || carro.getItems().isEmpty()) { %>
             <p>Lo siento pero no hay productos en el carrito de compras</p>
        <% } else { %>
-           <form name="formcarro" action="/webapp-headers/actualizar-carro" method="POST">
+           <form name="formcarro" action="/webapp-headers/carro/actualizar" method="POST">
                 <table>
                     <tr>
                         <td>id</td>

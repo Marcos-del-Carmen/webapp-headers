@@ -18,7 +18,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.Optional;
 
-@WebServlet("/actualizar-carro")
+@WebServlet("/carro/actualizar")
 public class ActualizarCarroServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
