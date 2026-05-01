@@ -26,6 +26,8 @@ public class ProductosServlet extends HttpServlet {
 
         ProductoServicesImp service = new ProductoServicesImp();
         List<Producto> productos = service.listar();
+        String mensajeApp = (String)  getServletContext().getAttribute("mensajeGlobal");
+        String mensajeRequest = (String) getServletContext().getAttribute("mensajeDelMomento");
 
         resp.setContentType("text/html; charset=UTF-8");
         try (PrintWriter out = resp.getWriter()) {
@@ -59,6 +61,8 @@ public class ProductosServlet extends HttpServlet {
                 out.println("       <tr>");
             });
             out.println("       </table>");
+            out.println("       <p>Mensaje app: "+mensajeApp+"</p>");
+            out.println("       <p>Mensaje del request: "+mensajeRequest+"</p>");
             out.println("   </body>");
             out.println("</html>");
         }

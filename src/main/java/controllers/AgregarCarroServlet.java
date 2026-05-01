@@ -25,14 +25,15 @@ public class AgregarCarroServlet extends HttpServlet {
         Optional<Producto> producto = service.porId(id);
         if(producto.isPresent()) {
             ItemCarro item  = new ItemCarro(1, producto.get());
-            Carro carro;
             HttpSession session = req.getSession();
+            Carro carro = (Carro) session.getAttribute("carro");
+            /*
             if(session.getAttribute("carro") == null) {
                 carro = new Carro();
                 session.setAttribute("carro", carro);
             } else  {
                 carro = (Carro) session.getAttribute("carro");
-            }
+            }*/
             carro.addItemCarrito(item);
         }
         resp.sendRedirect(req.getContextPath() + "/ver-carro");
