@@ -30,15 +30,6 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
         return productos;
     }
 
-    private static Producto getProducto(ResultSet rs) throws SQLException {
-        Producto p = new Producto();
-        p.setId(rs.getLong("id"));
-        p.setNombre(rs.getString("nombre"));
-        p.setPrecio(rs.getInt("precio"));
-        p.setTipo(rs.getString("categoria"));
-        return p;
-    }
-
     @Override
     public Producto porId(Long id) throws SQLException {
         Producto producto = null;
@@ -59,6 +50,11 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
     }
 
     @Override
+    public List<Producto> porNombre(String nombre) throws SQLException {
+        return null;
+    }
+
+    @Override
     public void guardar(Producto producto) throws SQLException {
 
     }
@@ -66,5 +62,14 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
     @Override
     public void eliminar(Long id) throws SQLException {
 
+    }
+
+    private static Producto getProducto(ResultSet rs) throws SQLException {
+        Producto p = new Producto();
+        p.setId(rs.getLong("id"));
+        p.setNombre(rs.getString("nombre"));
+        p.setPrecio(rs.getInt("precio"));
+        p.setTipo(rs.getString("categoria"));
+        return p;
     }
 }

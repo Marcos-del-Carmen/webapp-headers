@@ -11,6 +11,7 @@
             <li><a href="/webapp-headers/login.html">login</a></li>
             <li><a href="/webapp-headers/carro/ver">ver carro</a></li>
             <li><a href="/webapp-headers/logout">Cerrar sesión</a></li>
+            <li><a href="/webapp-headers/cursos/listar">Cursos</a></li>
         </ul>
     </body>
 </html>

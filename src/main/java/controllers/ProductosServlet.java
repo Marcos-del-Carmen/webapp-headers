@@ -19,8 +19,9 @@ public class ProductosServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         Connection conn = (Connection) req.getAttribute("conn");
-        LoginService auth = new LoginServiceSessionImpl();
         ProductService service = new ProductoServiceJdbcImpl(conn);
+
+        LoginService auth = new LoginServiceSessionImpl();
 
         Optional<String> usernameOptional = auth.getUsername(req);
         List<Producto> productos = service.listar();
