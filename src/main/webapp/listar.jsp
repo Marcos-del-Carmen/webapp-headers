@@ -20,6 +20,7 @@
 <body>
     <%if (username.isPresent()) { %>
         <div>Hola <%=username%>, bienvenido! </div>
+        <p><a href="<%=request.getContextPath()%>/producto/form">Crear[+]</a></p>
     <%} else { %>
         <div>Hola anonimo, bienvenido! </div>
     <%} %>
@@ -32,6 +33,8 @@
             <% if (username.isPresent()) { %>
                 <td>Precio</td>
                 <td>Compra producto</td>
+                <td>Editar</td>
+                <td>Eliminar</td>
             <% } %>
         </tr>
 
@@ -40,13 +43,25 @@
             <tr>
                 <td> <%= p.getId() %> </td>
                 <td> <%= p.getNombre() %> </td>
-                <td> <%= p.getTipo() %> </td>
+                <td> <%= p.getCategoria().getNombre() %> </td>
 
                 <% if (username.isPresent()) { %>
                     <td> <%= p.getPrecio() %> </td>
                     <td>
                         <a href="<%=request.getContextPath()%>/carro/agregar?id=<%=p.getId()%>">
                             Agregar a carro
+                        </a>
+                    </td>
+                    <td>
+                        <a href="<%=request.getContextPath()%>/producto/form?id=<%=p.getId()%>">
+                            Editar
+                        </a>
+                    </td>
+                    <td>
+                        <a
+                         onclick="return confirm('Estas seguro de eliminar este producto?')"
+                         href="<%=request.getContextPath()%>/producto/eliminar?id=<%=p.getId()%>">
+                            Eliminar
                         </a>
                     </td>
                 <% } %>

@@ -1,5 +1,6 @@
 package repositories;
 
+import models.Categoria;
 import models.Producto;
 
 import java.sql.*;
@@ -20,7 +21,7 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
 
         try(Statement stmt= conn.createStatement();
             ResultSet rs = stmt.executeQuery("SELECT p.*, c.nombre AS categoria FROM productos as p " +
-                    "INNER JOIN categorias AS c ON (p.categoria_id = c.id_categoria)")) {
+                    "INNER JOIN categorias AS c ON (p.categoria_id = c.id_categoria) ORDER BY p.id ASC")) {
             while (rs.next()){
                 Producto p = getProducto(rs);
                 productos.add(p);
@@ -36,7 +37,7 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
 
         try(
             PreparedStatement stmt = conn.prepareStatement("SELECT p.*, c.nombre AS categoria FROM productos as p " +
-                    "INNER JOIN categorias AS c ON (p.categoria_id = c.id_categoria) WHERE p.categoria_id = ?")) {
+                    "INNER JOIN categorias AS c ON (p.categoria_id = c.id_categoria) WHERE p.id = ?")) {
             stmt.setLong(1, id);
 
             try (ResultSet rs = stmt.executeQuery()){
@@ -57,10 +58,36 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
     @Override
     public void guardar(Producto producto) throws SQLException {
 
+        String sql = "";
+        if (producto.getId() != null && producto.getId() > 0) {
+            sql = "UPDATE productos SET nombre=?, precio=?, categoria_id=?, sku=? WHERE id=?";
+        } else  {
+            sql = "INSERT INTO productos (nombre, precio, categoria_id, sku, fecha_registro) VALUES (?,?,?,?,?)";
+        }
+
+        try(PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, producto.getNombre());
+            stmt.setInt(2, producto.getPrecio());
+            stmt.setLong(3, producto.getCategoria().getId());
+            stmt.setString(4, producto.getSku());
+
+            if(producto.getId() != null && producto.getId() > 0) {
+                stmt.setLong(5, producto.getId());
+            } else {
+                stmt.setDate(5, Date.valueOf(producto.getFechaRegistro()));
+            }
+            stmt.executeUpdate();
+        }
+
     }
 
     @Override
     public void eliminar(Long id) throws SQLException {
+        String sql = "DELETE FROM productos WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
 
     }
 
@@ -69,7 +96,13 @@ public class ProductoRepositotyJdbcImpl implements Repository<Producto> {
         p.setId(rs.getLong("id"));
         p.setNombre(rs.getString("nombre"));
         p.setPrecio(rs.getInt("precio"));
-        p.setTipo(rs.getString("categoria"));
+        p.setSku(rs.getString("sku"));
+        p.setSku(rs.getString("sku"));
+        p.setFechaRegistro(rs.getDate("fecha_registro").toLocalDate());
+        Categoria c = new Categoria();
+        c.setId(rs.getLong("categoria_id"));
+        c.setNombre(rs.getString("categoria"));
+        p.setCategoria(c);
         return p;
     }
 }

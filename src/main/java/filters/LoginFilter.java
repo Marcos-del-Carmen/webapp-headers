@@ -10,7 +10,7 @@ import services.LoginServiceSessionImpl;
 import java.io.IOException;
 import java.util.Optional;
 
-@WebFilter({"/carro/*"})
+@WebFilter({"/carro/*", "/producto/form/*", "/producto/eliminar/*"})
 public class LoginFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain) throws IOException, ServletException {
