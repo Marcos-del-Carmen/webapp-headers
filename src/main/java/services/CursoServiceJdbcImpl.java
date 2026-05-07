@@ -34,4 +34,31 @@ public class CursoServiceJdbcImpl implements CursoService {
             throw new RuntimeException(e);
         }
     }
+
+    @Override
+    public Optional<Curso> porId(Long id) {
+        try {
+            return Optional.ofNullable(this.cursoRepositorio.porId(id));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void guardar(Curso c) {
+        try {
+            this.cursoRepositorio.guardar(c);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public void eliminar(Long id) {
+        try {
+            this.cursoRepositorio.eliminar(id);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }

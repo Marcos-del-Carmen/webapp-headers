@@ -33,17 +33,30 @@ public class CursoRepositorioImpl implements Repository<Curso> {
 
     @Override
     public Curso porId(Long id) throws SQLException {
+        String sql = "SELECT * FROM cursos WHERE id=?";
 
-        return null;
+        Curso curso = null;
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)){
+             stmt.setLong(1, id);
+
+             try (ResultSet rs = stmt.executeQuery()) {
+                 if (rs.next()) {
+                    curso = getCurso(rs);
+                 }
+             }
+        }
+
+        return curso;
     }
 
     @Override
     public List<Curso> porNombre(String nombre) throws SQLException {
 
         List<Curso> cursos = new ArrayList<>();
-
+        String sql = "SELECT * FROM cursos as c WHERE c.nombre LIKE ?";
         try (
-                PreparedStatement stmt = conn.prepareStatement("SELECT * FROM cursos as c WHERE c.nombre LIKE ?")
+                PreparedStatement stmt = conn.prepareStatement(sql)
             ) {
             stmt.setString(1, "%" + nombre + "%");
 
@@ -57,13 +70,40 @@ public class CursoRepositorioImpl implements Repository<Curso> {
         return cursos;
     }
 
+    // actualiza y guarda dependiendo si se revibe el id del curso
     @Override
     public void guardar(Curso curso) throws SQLException {
+        String sql = "";
+
+        if(curso.getId() != null && curso.getId() > 0) {
+            sql = "UPDATE cursos SET nombre=?, descripcion=?, instructor=?, duracion=? WHERE id=? ";
+        } else {
+            sql = "INSERT INTO cursos (nombre, descripcion, instructor, duracion) VALUES (?,?,?,?)";
+        }
+
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, curso.getNombre());
+            stmt.setString(2, curso.getDescripcion());
+            stmt.setString(3, curso.getInstructor());
+            stmt.setDouble(4, curso.getDuracion());
+
+            if (curso.getId() != null && curso.getId() > 0) {
+                stmt.setLong(5, curso.getId());
+            }
+
+            stmt.executeUpdate();
+        }
 
     }
 
+
     @Override
     public void eliminar(Long id) throws SQLException {
+        String slq = "DELETE FROM cursos WHERE id=?";
+        try (PreparedStatement stmt = conn.prepareStatement(slq)) {
+            stmt.setLong(1, id);
+            stmt.executeUpdate();
+        }
 
     }
 

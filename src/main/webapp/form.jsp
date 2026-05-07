@@ -68,7 +68,7 @@
                 </div>
             </div>
             <div>
-                <input type="submit" value="<%=producto.getId() > 0 ? "Editar" : "Crear" %>">
+                <input type="submit" value="<%=(producto.getId()!=null && producto.getId() > 0) ? "Editar" : "Crear" %>">
                 <input type="hidden" value="<%=producto.getId()%>" name="id">
             </div>
         </form>

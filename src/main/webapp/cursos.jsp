@@ -12,13 +12,17 @@
     <title>Lista de cursos</title>
 </head>
 <body>
+    <p>
+        <a href="<%=request.getContextPath()%>/cursos/form">Crear [+]</a>
+    </p>
     <form action="<%=request.getContextPath()%>/cursos/buscar" method="POST">
         <label for="nombre">Nombre del curso </label><br>
         <input type="text" name="nombre" id="nombre">
         <input type="submit" value="Buscar">
     </form>
-
-    <% if(!cursos.isEmpty()) { %>
+    <% if (cursos.isEmpty()) { %>
+        <p>No hay cursos disponibles...</p>
+    <% } else { %>
         <table>
                 <thead>
                     <tr>
@@ -27,6 +31,7 @@
                         <td>Instructor</td>
                         <td>Descripcion</td>
                         <td>Duracion</td>
+                        <td colspan="2">Acciones</td>
                     </tr>
                 </thead>
 
@@ -38,13 +43,16 @@
                             <td><%=c.getDescripcion()%></td>
                             <td><%=c.getInstructor()%></td>
                             <td><%=c.getDuracion()%></td>
+                            <td>
+                                <a href="<%=request.getContextPath()%>/cursos/form?id=<%=c.getId()%>">Editar</a>
+                            </td>
+                            <td>
+                                <a onclick="return confirm('estas seguro de eliminar el curso?');" href="<%=request.getContextPath()%>/cursos/eliminar?id=<%=c.getId()%>">Eliminar</a>
+                            </td>
                         </tr>
                     <% } %>
                 </tbody>
         </table>
-    <% } else { %>
-        <p>No hay cursos disponibles...</p>
     <% } %>
-
 </body>
 </html>
