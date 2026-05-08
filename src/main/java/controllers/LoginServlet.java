@@ -3,12 +3,12 @@ package controllers;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
-import services.LoginService;
-import services.LoginServiceCookieImpl;
-import services.LoginServiceSessionImpl;
+import models.Usuarios;
+import services.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
 import java.util.Optional;
 
 @WebServlet({"/login","/login.html"})
@@ -45,8 +45,13 @@ public class LoginServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
-        if(username.equals(USERNAME) && password.equals(PASSWORD)) {
 
+        Connection conn = (Connection) req.getAttribute("conn");
+        UsuarioService service = new UsuarioServiceImpl(conn);
+
+        Optional<Usuarios> optionalUsuario = service.login(username, password);
+
+        if(optionalUsuario.isPresent()) {
             HttpSession usernameSession = req.getSession();
             usernameSession.setAttribute("username", username);
             req.setAttribute("title", "Inicio de sessión");

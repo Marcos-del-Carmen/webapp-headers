@@ -104,7 +104,6 @@ public class CursoRepositorioImpl implements Repository<Curso> {
             stmt.setLong(1, id);
             stmt.executeUpdate();
         }
-
     }
 
     private static Curso getCurso(ResultSet rs) throws SQLException {
