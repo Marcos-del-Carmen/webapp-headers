@@ -13,5 +13,6 @@ public class VerCarroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.sendRedirect(req.getContextPath() + "/carro.jsp");
+        req.setAttribute("title", "Carrito de compras");
     }
 }

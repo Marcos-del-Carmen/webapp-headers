@@ -44,7 +44,7 @@ public class ProductoFormServlet extends HttpServlet {
 
         req.setAttribute("categorias", service.listaCategoria());
         req.setAttribute("producto", producto);
-
+        req.setAttribute("title", "Formualrio productos");
         getServletContext().getRequestDispatcher("/form.jsp").forward(req, resp);
     }
 

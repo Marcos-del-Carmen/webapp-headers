@@ -32,6 +32,7 @@ public class AgregarCarroServlet extends HttpServlet {
             Carro carro = (Carro) session.getAttribute("carro");
             carro.addItemCarrito(item);
         }
+        req.setAttribute("title", "Agregar a carro");
         resp.sendRedirect(req.getContextPath() + "/carro/ver");
     }
 }

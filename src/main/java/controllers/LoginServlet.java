@@ -49,6 +49,7 @@ public class LoginServlet extends HttpServlet {
 
             HttpSession usernameSession = req.getSession();
             usernameSession.setAttribute("username", username);
+            req.setAttribute("title", "Inicio de sessión");
 
             resp.sendRedirect(req.getContextPath() + "/login.html");
         } else {
