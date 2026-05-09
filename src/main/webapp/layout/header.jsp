@@ -26,6 +26,9 @@
               <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/cursos/listar">Cursos</a>
             </li>
             <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/usuarios/listar">Usuarios</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" href="${pageContext.request.contextPath}/productos">Ver carro(${carro.items.size()})</a>
             </li>
             <li class="nav-item dropdown">
