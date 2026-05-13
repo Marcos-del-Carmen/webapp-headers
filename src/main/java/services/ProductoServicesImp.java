@@ -1,5 +1,6 @@
 package services;
 
+import models.Categoria;
 import models.Producto;
 
 import java.util.Arrays;
@@ -25,5 +26,30 @@ public class ProductoServicesImp implements ProductService {
             }
             return p.getNombre().contains(nombre);
         }).findFirst();
+    }
+
+    @Override
+    public Optional<Producto> porId(Long id) {
+        return this.listar().stream().filter(p -> p.getId().equals(id)).findAny();
+    }
+
+    @Override
+    public void guardar(Producto p) {
+
+    }
+
+    @Override
+    public void eliminar(Long id) {
+
+    }
+
+    @Override
+    public List<Categoria> listaCategoria() {
+        return null;
+    }
+
+    @Override
+    public Optional<Categoria> porIdCategoria(Long id) {
+        return Optional.empty();
     }
 }

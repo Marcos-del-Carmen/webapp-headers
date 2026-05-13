@@ -1,0 +1,34 @@
+package controllers;
+
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import models.Producto;
+import services.*;
+
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.util.List;
+import java.util.Optional;
+
+@WebServlet({"/productos.html", "/productos"})
+public class ProductosServlet extends HttpServlet {
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Connection conn = (Connection) req.getAttribute("conn");
+        ProductService service = new ProductoServiceJdbcImpl(conn);
+
+        LoginService auth = new LoginServiceSessionImpl();
+
+        Optional<String> usernameOptional = auth.getUsername(req);
+        List<Producto> productos = service.listar();
+
+        req.setAttribute("productos", productos);
+        req.setAttribute("username", usernameOptional);
+        req.setAttribute("title", "Lista de productos");
+        getServletContext().getRequestDispatcher("/listar.jsp").forward(req, resp);
+    }
+}

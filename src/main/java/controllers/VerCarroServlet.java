@@ -8,10 +8,11 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 
-@WebServlet("/despachar")
-public class DespacharServlet extends HttpServlet {
+@WebServlet("/carro/ver")
+public class VerCarroServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        getServletContext().getRequestDispatcher("/productos.html").forward(req, resp);
+        resp.sendRedirect(req.getContextPath() + "/carro.jsp");
+        req.setAttribute("title", "Carrito de compras");
     }
 }
